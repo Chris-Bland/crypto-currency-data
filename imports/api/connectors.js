@@ -4,16 +4,15 @@ const btcClient = new gdax.PublicClient();
 
 const Bitcoin = {
 
-  async getData({ inputTime}) {
+  async getData({}) {
 
     const ticker = await new Promise(function (resolve, reject) {
       btcClient.getProductTicker(function (err, res, data) {
         resolve(data)
       })
     })
-
+    
     const historicRates = await new Promise(function (resolve, reject) {
-
       btcClient.getProductHistoricRates({
         granularity: 60
       }, (err, response) => {
@@ -23,33 +22,30 @@ const Bitcoin = {
           console.log('API Limit Reached.');
           return;
         } else {
+          let chart = [];
           let total= 0;
-          for (var i = 0; i < (inputTime); i++) {
+          for (var i = 0; i < (60); i++) {
             total += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
+            var rv = {};
+            for (var j = 0; j < btcHistoric[i].length; ++j){
+              rv["time"] = btcHistoric[i][0];
+              rv["low"] = btcHistoric[i][1];
+              rv["high"] = btcHistoric[i][2];
+              rv["open"] = btcHistoric[i][3];
+              rv["close"] = btcHistoric[i][4];
+              rv["volume"] = btcHistoric[i][5];
           }
-          let firstCandle = btcHistoric[(inputTime) - 1];
+          chart.push(rv);
+          }
+          let firstCandle = btcHistoric[(60) - 1];
           const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
-          const averagePrice = total / inputTime;
+          const averagePrice = total / 60;
           // ========================== CHART LOGIC ==========================
-          var chart = [];
-          for (var i = 0; i < 60; i++) {
-              var rv = {};
-              for (var j = 0; j < btcHistoric[i].length; ++j){
-                rv["time"] = btcHistoric[i][0];
-                rv["low"] = btcHistoric[i][1];
-                rv["high"] = btcHistoric[i][2];
-                rv["open"] = btcHistoric[i][3];
-                rv["close"] = btcHistoric[i][4];
-                rv["volume"] = btcHistoric[i][5];
-            }
-            chart.push(rv);
-          }
-
+  
           // ========================== CHART LOGIC ==========================
           resolve({
             averagePrice,
             percentChange: (ticker.price - openPrice) / ticker.price,
-            inputTime,
             chart
           })
         }
@@ -99,7 +95,6 @@ const Bitcoin = {
     return {
       price: ticker.price,
       averagePrice,
-      inputTime,
       percentChange,
       parsedBook,
       chart
