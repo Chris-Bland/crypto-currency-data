@@ -31,34 +31,26 @@ const Bitcoin = {
           const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
           const averagePrice = total / inputTime;
           // ========================== CHART LOGIC ==========================
-          console.log('BTCHISTORIC: ', btcHistoric);
-          var candles = [];
+          var chart = [];
           for (var i = 0; i < 60; i++) {
               var rv = {};
               for (var j = 0; j < btcHistoric[i].length; ++j){
                 rv["time"] = btcHistoric[i][0];
                 rv["low"] = btcHistoric[i][1];
                 rv["high"] = btcHistoric[i][2];
-                rv["open"] = btcHistoric[i][0];
-                rv["close"] = btcHistoric[i][1];
-                rv["volume"] = btcHistoric[i][2];
+                rv["open"] = btcHistoric[i][3];
+                rv["close"] = btcHistoric[i][4];
+                rv["volume"] = btcHistoric[i][5];
             }
-            asksO.push(rv);
+            chart.push(rv);
           }
-
-
-
-
-
-
-
-
 
           // ========================== CHART LOGIC ==========================
           resolve({
             averagePrice,
             percentChange: (ticker.price - openPrice) / ticker.price,
-            inputTime
+            inputTime,
+            chart
           })
         }
       });
@@ -101,14 +93,16 @@ const Bitcoin = {
           resolve(parsedBook)
         })
       });
-    const { averagePrice, percentChange, } = historicRates;
-    console.log('inputTime: ', inputTime);
+    const { averagePrice, percentChange, chart} = historicRates;
+    console.log('Chart: ', chart[0].time);
+
     return {
       price: ticker.price,
       averagePrice,
       inputTime,
       percentChange,
       parsedBook,
+      chart
     }
   }
 }

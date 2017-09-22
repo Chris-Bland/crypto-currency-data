@@ -7,6 +7,7 @@ export const typeDefs = [`
     inputTime: Int
     percentChange: Float
     parsedBook: Book
+    chart: [Candles] 
   }
 
   type Book {
@@ -18,6 +19,14 @@ export const typeDefs = [`
     price: String
     size: String
     number: Int
+  }
+  type Candles {
+    time: Int
+    low: Int
+    high: Int
+    open: Int
+    close: Int
+    volume: Int
   }
 
   type RootQuery {
@@ -40,9 +49,20 @@ export const resolvers = {
     inputTime: ({ inputTime }) => inputTime,
     percentChange: ({ percentChange }) => percentChange,
     parsedBook: ({parsedBook}) => parsedBook,
+    chart: ({chart}) => chart,
   },
   Book: {
     bids: ({bids}) => bids,
     asks: ({asks}) => asks
+  },
+  Candles: {
+    time: ({time}) => time,
+    low: ({low}) => low,
+    high: ({high}) => high,
+    open: ({open}) => open,
+    close: ({close}) => close,
+    volume: ({volume}) => volume,
+
   }
+
 };
