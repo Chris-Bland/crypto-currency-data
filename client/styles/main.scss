@@ -40,7 +40,7 @@ html, body {
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  height: 140px;
+
 }
 
 .info-container {
@@ -102,4 +102,17 @@ input{
 }
 .btcTitle {
   font-weight:bold;
+}
+.books {
+  border: 4px black solid;
+  margin: auto;
+  width: 30%;
+  border-radius: 4px;
+}
+.bids {
+
+  background-color: rgba(60, 194, 196, 0.6)!important
+}
+.asks {
+  background-color: rgba(104, 226, 104, 0.6) !important
 }

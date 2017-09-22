@@ -18,11 +18,16 @@ const Bitcoin = {
       }, (err, response) => {
         if (err) console.log('err', err);
         var btcHistoric = JSON.parse(response.body);
+
+
+
+
+
         if (btcHistoric[0] === undefined) {
           console.log('API Limit Reached.');
           return;
         } else {
-          let chart = [];
+          let chartData = [];
           let total= 0;
           for (var i = 0; i < (60); i++) {
             total += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
@@ -35,31 +40,32 @@ const Bitcoin = {
               rv["close"] = btcHistoric[i][4];
               rv["volume"] = btcHistoric[i][5];
           }
-          chart.push(rv);
+          chartData.push(rv);
           }
           let firstCandle = btcHistoric[(60) - 1];
           const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
           const averagePrice = total / 60;
-          // ========================== CHART LOGIC ==========================
+          // ========================== chartData LOGIC ==========================
   
-          // ========================== CHART LOGIC ==========================
+          // ========================== chartData LOGIC ==========================
           resolve({
             averagePrice,
             percentChange: (ticker.price - openPrice) / ticker.price,
-            chart
+            chartData
           })
         }
       });
     })
 
     const parsedBook = await new Promise(function (resolve, reject) {
-        btcClient.getProductOrderBook({ level: 2 }, (error, response, book) => {
+        btcClient.getProductOrderBook({ level: 3 }, (error, response, book) => {
+
           const bids = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 8; i++) {
             bids.push(book.bids[i]);
           }
           const asks = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 8; i++) {
             asks.push(book.asks[i]);
           }
           var asksO = [];
@@ -68,7 +74,6 @@ const Bitcoin = {
               for (var j = 0; j < asks[i].length; ++j){
                 rv["price"] = asks[i][0];
                 rv["size"] = asks[i][1];
-                rv["number"] = asks[i][2];
             }
             asksO.push(rv);
           }
@@ -78,7 +83,6 @@ const Bitcoin = {
               for (var j = 0; j < bids[i].length; ++j){
                 rv["price"] = bids[i][0];
                 rv["size"] = bids[i][1];
-                rv["number"] = bids[i][2];
             }
             bidsO.push(rv);
           }
@@ -89,15 +93,13 @@ const Bitcoin = {
           resolve(parsedBook)
         })
       });
-    const { averagePrice, percentChange, chart} = historicRates;
-    console.log('Chart: ', chart[0].time);
-
+    const { averagePrice, percentChange, chartData} = historicRates;
     return {
       price: ticker.price,
       averagePrice,
       percentChange,
       parsedBook,
-      chart
+      chartData
     }
   }
 }
