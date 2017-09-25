@@ -15,16 +15,19 @@ export default class Chart extends React.Component {
         const {chartData} = this.props
         const sortedChartData = _.sortBy(chartData, 'time')
         return sortedChartData.map((dataObj)=>{
-            return [dataObj.time, dataObj.open, dataObj.high, dataObj.low, dataObj.close]
+            var time = dataObj.time + '000';
+            return [parseInt(time), dataObj.open, dataObj.high, dataObj.low, dataObj.close]
         })
     }
     formatVolumeData(){
         const {chartData} = this.props
         const sortedVolumeData = _.sortBy(chartData, 'time')
         return sortedVolumeData.map((dataObj)=>{
-            console.log('TIME VOLUME: ', [dataObj.time, dataObj.volume])
-            return[dataObj.time, dataObj.volume]
-
+            var time = dataObj.time + '000';
+            console.log('Time: ', time);
+            console.log('dataObj.time: ', dataObj.time);
+            return[parseInt(time), dataObj.volume ]
+        
         })
     }
 
@@ -100,8 +103,8 @@ export default class Chart extends React.Component {
                         data: this.formatPriceData(),
                         dataGrouping: {
                             units: [[
-                                'week',                         // unit name
-                                [1]                             // allowed multiples
+                                'week',                         
+                                [1]                             
                             ], [
                                 'month',
                                 [1, 2, 3, 4, 6]
@@ -114,8 +117,8 @@ export default class Chart extends React.Component {
                         yAxis: 1,
                         dataGrouping: {
                             units: [[
-                                'week',                         // unit name
-                                [1]                             // allowed multiples
+                                'week',                         
+                                [1]                             
                             ], [
                                 'month',
                                 [1, 2, 3, 4, 6]

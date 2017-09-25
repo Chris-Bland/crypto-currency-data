@@ -41,7 +41,6 @@ class App extends React.Component {
 
   render() {
     if (this.props.loading) return (<Loading />)
-    console.log('HERE!!!!!', this.props.bitcoin.parsedBook.bids[0]);
     const { averagePrice, percentChange, price } = this.props.bitcoin;
     const { percentLimit } = this.props
     const movedColor = percentChange > 0 ? 'green' : 'red';
