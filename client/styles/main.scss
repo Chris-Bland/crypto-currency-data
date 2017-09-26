@@ -108,11 +108,31 @@ input{
   margin: auto;
   width: 30%;
   border-radius: 4px;
+  flex: 0 1 30%;
+  margin: 0 3%;
 }
 .bids {
-
   background-color: rgba(60, 194, 196, 0.6)!important
 }
 .asks {
   background-color: rgba(104, 226, 104, 0.6) !important
+}
+.chart {
+  justify-content: center;
+  display: flex;
+  border: black 4px solid;
+  border-radius: 5px;
+  margin-bottom:5%;
+
+}
+.containerBooksCharts {
+  display: flex;
+  flex-wrap: wrap;
+}
+.twitterAndChart {
+  display: flex;
+  flex-direction: column;
+}
+th {
+  height:1em;
 }

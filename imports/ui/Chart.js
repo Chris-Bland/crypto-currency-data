@@ -32,41 +32,15 @@ export default class Chart extends React.Component {
     }
 
     render() {
-        // const config = {
-
-        //     rangeSelector: {
-        //         selected: 1
-        //     },
-
-        //     title: {
-        //         text: 'Bitcoin Price Data'
-        //     },
-
-        //     series: [{
-        //         type: 'candlestick',
-        //         name: 'Bitcoin Price',
-        //         data: this.formatPriceData(),
-        //         dataGrouping: {
-        //             units: [
-        //                 [
-        //                     'minutes', 
-        //                     [1] 
-        //                 ], [
-        //                     'hours',
-        //                     [1]
-        //                 ]
-        //             ]
-        //         }
-        //     }]
-        // }
         const config = {
+            
             
                     rangeSelector: {
                         selected: 1
                     },
             
                     title: {
-                        text: 'AAPL Historical'
+                        text: 'Bitcoin Historical'
                     },
             
                     yAxis: [{
@@ -75,7 +49,7 @@ export default class Chart extends React.Component {
                             x: -3
                         },
                         title: {
-                            text: 'OHLC'
+                            text: 'GDAX'
                         },
                         height: '60%',
                         lineWidth: 2
@@ -98,15 +72,15 @@ export default class Chart extends React.Component {
                     },
             
                     series: [{
-                        type: 'candlestick',
-                        name: 'AAPL',
+                        type: 'candlestick', color: "red",
+                        name: 'BTC',
                         data: this.formatPriceData(),
                         dataGrouping: {
                             units: [[
-                                'week',                         
+                                'minute',                         
                                 [1]                             
                             ], [
-                                'month',
+                                'hour',
                                 [1, 2, 3, 4, 6]
                             ]]
                         }
@@ -117,10 +91,10 @@ export default class Chart extends React.Component {
                         yAxis: 1,
                         dataGrouping: {
                             units: [[
-                                'week',                         
+                                'minute',                         
                                 [1]                             
                             ], [
-                                'month',
+                                'hour',
                                 [1, 2, 3, 4, 6]
                             ]]
                         }
@@ -129,7 +103,9 @@ export default class Chart extends React.Component {
 
 
         return (
-          <ReactHighstock config={config}></ReactHighstock >
+            <div className="chart">
+          <ReactHighstock config={config} ></ReactHighstock >
+          </div>
 
         )
     }

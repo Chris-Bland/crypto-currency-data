@@ -1,18 +1,13 @@
 import React from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import ReactDOM from 'react-dom';
+import TwitterTimeline from 'react-twitter-embedded-timeline';
 
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import Chart from './Chart'
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
+import Table, {
+  TableBody, TableCell, TableHead, TableRow 
 } from 'material-ui/Table';
 
 import numeral from 'numeral';
@@ -70,60 +65,70 @@ class App extends React.Component {
           </div>
         </div>
         <br />
-        <div className="books">
-          <Table >
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn>Price</TableHeaderColumn>
-                <TableHeaderColumn>Size</TableHeaderColumn>
-              </TableRow>
-              <TableRow>
-                <TableHeaderColumn colSpan="3" tooltip="Super Header">
-                  Asks
-              </TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false} className="asks" >
-              {
-                this.props.bitcoin.parsedBook.asks.map(({ price, size, number }, i) => {
+        <div className="containerBooksCharts">
+          <div className="books">
+            <Table  >
+              <TableHead >
+                <TableRow>
+                  <TableCell>Price</TableCell>
+                  <TableCell>Size</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell colSpan="3" height="3em" >
+                    Asks
+              </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody  className="asks" >
+                {
+                  this.props.bitcoin.parsedBook.asks.map(({ price, size, number }, i) => {
 
-                  return (
-                    <TableRow key={i}>
-                      <TableRowColumn>{price}</TableRowColumn>
-                      <TableRowColumn>{size}</TableRowColumn>
-                    </TableRow>
-                  )
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{price}</TableCell>
+                        <TableCell>{size}</TableCell>
+                      </TableRow>
+                    )
 
-                })
-              }
-            </TableBody>
-          </Table>
-          <Table >
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn colSpan="3" tooltip="Super Header" >
-                  Bids
-              </TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
+                  })
+                }
+              </TableBody>
+            </Table>
+            <Table >
+              <TableHead  >
+                <TableRow>
+                  <TableCell colSpan="3" >
+                    Bids
+              </TableCell>
+                </TableRow>
+              </TableHead>
 
-            <TableBody displayRowCheckbox={false} className="bids" >
-              {
-                this.props.bitcoin.parsedBook.bids.map(({ price, size, number }, i) => {
+              <TableBody  className="bids" >
+                {
+                  this.props.bitcoin.parsedBook.bids.map(({ price, size, number }, i) => {
 
-                  return (
-                    <TableRow key={i}>
-                      <TableRowColumn>{price}</TableRowColumn>
-                      <TableRowColumn>{size}</TableRowColumn>
-                    </TableRow>
-                  )
-                })
-              }
-            </TableBody>
-          </Table>
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{price}</TableCell>
+                        <TableCell>{size}</TableCell>
+                      </TableRow>
+                    )
+                  })
+                }
+              </TableBody>
+            </Table>
+          </div>
+          <div className="twitterAndChart">
+            <Chart chartData={this.props.bitcoin.chartData} />
+            <div className="Twitter">
+              <TwitterTimeline widgetId="912461228252987392" chrome="noborders noheader" />
+            </div>
+          </div>
+
         </div>
-              <Chart chartData={this.props.bitcoin.chartData}/>
+
       </div>
+
     )
   }
 }

@@ -1,6 +1,6 @@
 import gdax from 'gdax'
 
-const btcClient = new gdax.PublicClient();
+const btcClient = new gdax.PublicClient('LTC-USD');
 
 const Bitcoin = {
 
