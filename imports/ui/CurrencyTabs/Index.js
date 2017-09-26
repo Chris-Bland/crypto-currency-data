@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import Bitcoin from './Bitcoin';
+import Currency from './Currency';
 function TabContainer(props) {
     return <div style={{ padding: 20 }}>{props.children}</div>;
   }
@@ -22,17 +22,15 @@ class CurrencyTabs extends React.Component {
         }
       }
   handleChange = (event, value) => {
-    this.setState({ value });
+   this.setState({ value });
   };
 
   render() {
-
     const { value } = this.state;
-    console.log("VALUE: ", value)
     return (
       <Paper >
         <Tabs
-          value={this.value}
+          value={value}
           onChange={this.handleChange}
           indicatorColor="primary"
           textColor="primary"
@@ -42,9 +40,9 @@ class CurrencyTabs extends React.Component {
           <Tab label="Ethereum" />
           <Tab label="Litecoin" />
         </Tabs>
-        {value === 0 && <TabContainer>{<Bitcoin />}</TabContainer>}
-        {value === 1 && <TabContainer>{'Ethereum'}</TabContainer>}
-        {value === 2 && <TabContainer>{'Litecoin'}</TabContainer>}
+        {value === 0 && <TabContainer>{<Currency currencyType="BTC-USD"/>}</TabContainer>}
+        {value === 1 && <TabContainer>{<Currency currencyType="ETH-USD"/>}</TabContainer>}
+        {value === 2 && <TabContainer>{<Currency currencyType="LTC-USD" />}</TabContainer>}
       </Paper>
     );
   }

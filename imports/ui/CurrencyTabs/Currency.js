@@ -7,7 +7,7 @@ import TwitterTimeline from 'react-twitter-embedded-timeline';
 import Dialog from 'material-ui/Dialog';
 import Chart from '../Chart'
 import Table, {
-  TableBody, TableCell, TableHead, TableRow 
+  TableBody, TableCell, TableHead, TableRow
 } from 'material-ui/Table';
 
 import numeral from 'numeral';
@@ -24,7 +24,7 @@ class App extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (!this.props.loading) {
-      const { percentChange } = this.props.bitcoin;
+      const { percentChange } = this.props.currency;
       const { percentLimit } = nextProps;
       const audio = new Audio('/alert.mp3');
 
@@ -36,16 +36,12 @@ class App extends React.Component {
 
   render() {
     if (this.props.loading) return (<Loading />)
-    const { averagePrice, percentChange, price } = this.props.bitcoin;
+    const { averagePrice, percentChange, price } = this.props.currency;
     const { percentLimit } = this.props
     const movedColor = percentChange > 0 ? 'green' : 'red';
-
     return (
-
-      <div className='bitcoin-container'>
-        <div className="header">
-          <h1>Bitcoin</h1>
-        </div>
+      <div className='currency-container'>
+   
         <div className={`info-container ${movedColor}`}>
           <div className='info-item'>
             <div className='btcTitle'>Price</div>
@@ -79,10 +75,9 @@ class App extends React.Component {
               </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody  className="asks" >
+              <TableBody className="asks" >
                 {
-                  this.props.bitcoin.parsedBook.asks.map(({ price, size, number }, i) => {
-
+                  this.props.currency.parsedBook.asks.map(({ price, size, number }, i) => {
                     return (
                       <TableRow key={i}>
                         <TableCell>{price}</TableCell>
@@ -102,10 +97,9 @@ class App extends React.Component {
               </TableCell>
                 </TableRow>
               </TableHead>
-
-              <TableBody  className="bids" >
+              <TableBody className="bids" >
                 {
-                  this.props.bitcoin.parsedBook.bids.map(({ price, size, number }, i) => {
+                  this.props.currency.parsedBook.bids.map(({ price, size, number }, i) => {
 
                     return (
                       <TableRow key={i}>
@@ -119,7 +113,7 @@ class App extends React.Component {
             </Table>
           </div>
           <div className="twitterAndChart">
-            <Chart chartData={this.props.bitcoin.chartData} />
+            <Chart chartData={this.props.currency.chartData} />
             <div className="Twitter">
               <TwitterTimeline widgetId="912461228252987392" chrome="noborders noheader" />
             </div>
@@ -133,9 +127,9 @@ class App extends React.Component {
   }
 }
 
-const getBitCoinData = gql`
-  query {
-    bitcoin {
+const getCoinData = gql`
+  query($currencyType: String!) {
+    currency(currencyType: $currencyType) {
       price
       averagePrice
       percentChange
@@ -161,18 +155,18 @@ const getBitCoinData = gql`
   }
 `;
 
-const withData = graphql(getBitCoinData, {
-  options: ({ }) => {
+const withData = graphql(getCoinData, {
+  options: ({ currencyType }) => {
     return ({
       pollInterval: 3000,
       variables: {
-
+        currencyType
       },
     })
   },
-  props: ({ data: { bitcoin, error, loading, refetch } }) => {
+  props: ({ data: { currency, error, loading, refetch } }) => {
     return {
-      bitcoin,
+      currency,
       refetch,
       loading,
       error

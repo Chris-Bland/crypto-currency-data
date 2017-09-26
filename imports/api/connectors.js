@@ -1,48 +1,45 @@
 import gdax from 'gdax'
 
-const btcClient = new gdax.PublicClient('LTC-USD');
-
-const Bitcoin = {
-
-  async getData({}) {
-
+const Currency = {
+  async getData({currencyType}) {
+    const currencyClient = new gdax.PublicClient(currencyType);
     const ticker = await new Promise(function (resolve, reject) {
-      btcClient.getProductTicker(function (err, res, data) {
+      currencyClient.getProductTicker(function (err, res, data) {
         resolve(data)
       })
     })
     
     const historicRates = await new Promise(function (resolve, reject) {
-      btcClient.getProductHistoricRates({
+      currencyClient.getProductHistoricRates({
         granularity: 60
       }, (err, response) => {
         if (err) console.log('err', err);
-        var btcHistoric = JSON.parse(response.body);
+        var currencyHistoric = JSON.parse(response.body);
 
 
 
 
 
-        if (btcHistoric[0] === undefined) {
+        if (currencyHistoric[0] === undefined) {
           console.log('API Limit Reached.');
           return;
         } else {
           let chartData = [];
           let total= 0;
           for (var i = 0; i < (60); i++) {
-            total += (btcHistoric[i][1] + btcHistoric[i][2]) / 2;
+            total += (currencyHistoric[i][1] + currencyHistoric[i][2]) / 2;
             var rv = {};
-            for (var j = 0; j < btcHistoric[i].length; ++j){
-              rv["time"] = btcHistoric[i][0];
-              rv["low"] = btcHistoric[i][1];
-              rv["high"] = btcHistoric[i][2];
-              rv["open"] = btcHistoric[i][3];
-              rv["close"] = btcHistoric[i][4];
-              rv["volume"] = btcHistoric[i][5];
+            for (var j = 0; j < currencyHistoric[i].length; ++j){
+              rv["time"] = currencyHistoric[i][0];
+              rv["low"] = currencyHistoric[i][1];
+              rv["high"] = currencyHistoric[i][2];
+              rv["open"] = currencyHistoric[i][3];
+              rv["close"] = currencyHistoric[i][4];
+              rv["volume"] = currencyHistoric[i][5];
           }
           chartData.push(rv);
           }
-          let firstCandle = btcHistoric[(60) - 1];
+          let firstCandle = currencyHistoric[(60) - 1];
           const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
           const averagePrice = total / 60;
           // ========================== chartData LOGIC ==========================
@@ -58,7 +55,7 @@ const Bitcoin = {
     })
 
     const parsedBook = await new Promise(function (resolve, reject) {
-        btcClient.getProductOrderBook({ level: 3 }, (error, response, book) => {
+        currencyClient.getProductOrderBook({ level: 3 }, (error, response, book) => {
 
           const bids = [];
           for (let i = 0; i < 8; i++) {
@@ -103,4 +100,4 @@ const Bitcoin = {
     }
   }
 }
-export default Bitcoin;
+export default Currency;

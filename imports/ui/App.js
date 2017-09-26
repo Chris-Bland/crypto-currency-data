@@ -23,10 +23,6 @@ class App extends React.Component {
     }
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
     const { value } = this.state;
     return (
@@ -39,11 +35,11 @@ class App extends React.Component {
       </Toolbar>
     </AppBar>
     <AppBar position="static">
-          <Tabs value={this.value} onChange={this.handleChange}>
+          <Tabs  value={value}>
             <Tab label="Dashboard" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer>{ <CurrencyTabs  />}</TabContainer>}
+        <TabContainer>{ <CurrencyTabs  />}</TabContainer>
 
       </div>
     )

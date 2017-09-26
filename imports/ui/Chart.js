@@ -24,8 +24,6 @@ export default class Chart extends React.Component {
         const sortedVolumeData = _.sortBy(chartData, 'time')
         return sortedVolumeData.map((dataObj)=>{
             var time = dataObj.time + '000';
-            console.log('Time: ', time);
-            console.log('dataObj.time: ', dataObj.time);
             return[parseInt(time), dataObj.volume ]
         
         })
@@ -40,7 +38,7 @@ export default class Chart extends React.Component {
                     },
             
                     title: {
-                        text: 'Bitcoin Historical'
+                        text: 'Currency Historical'
                     },
             
                     yAxis: [{
