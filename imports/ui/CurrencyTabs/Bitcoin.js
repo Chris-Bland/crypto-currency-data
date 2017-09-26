@@ -5,14 +5,14 @@ import ReactDOM from 'react-dom';
 import TwitterTimeline from 'react-twitter-embedded-timeline';
 
 import Dialog from 'material-ui/Dialog';
-import Chart from './Chart'
+import Chart from '../Chart'
 import Table, {
   TableBody, TableCell, TableHead, TableRow 
 } from 'material-ui/Table';
 
 import numeral from 'numeral';
 
-import Loading from './Loading';
+import Loading from '../Loading';
 
 class App extends React.Component {
   constructor(props) {
