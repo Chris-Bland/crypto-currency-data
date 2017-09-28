@@ -45,10 +45,7 @@ html, body {
 
 .info-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center; 
-  margin: 0% 31%;
-  border-radius: 35px;
   font-size: 1em;
 
   &.red {
@@ -117,14 +114,7 @@ input{
 .asks {
   background-color: rgba(104, 226, 104, 0.6) !important
 }
-.chart {
-  justify-content: center;
-  display: flex;
-  border: black 4px solid;
-  border-radius: 5px;
-  margin-bottom:5%;
 
-}
 .containerBooksCharts {
   display: flex;
   flex-wrap: wrap;

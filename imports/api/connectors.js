@@ -16,10 +16,6 @@ const Currency = {
         if (err) console.log('err', err);
         var currencyHistoric = JSON.parse(response.body);
 
-
-
-
-
         if (currencyHistoric[0] === undefined) {
           console.log('API Limit Reached.');
           return;
@@ -42,6 +38,7 @@ const Currency = {
           let firstCandle = currencyHistoric[(60) - 1];
           const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
           const averagePrice = total / 60;
+
           // ========================== chartData LOGIC ==========================
   
           // ========================== chartData LOGIC ==========================

@@ -22,11 +22,11 @@ export const typeDefs = [`
 
   type Candles {
     time: Int
-    low: Int
-    high: Int
-    open: Int
-    close: Int
-    volume: Int
+    low: Float
+    high: Float
+    open: Float
+    close: Float
+    volume: Float
   }
 
   type RootQuery {

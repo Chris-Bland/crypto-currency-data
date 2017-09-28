@@ -14,6 +14,7 @@ export default class Chart extends React.Component {
     formatPriceData(){
         const {chartData} = this.props
         const sortedChartData = _.sortBy(chartData, 'time')
+
         return sortedChartData.map((dataObj)=>{
             var time = dataObj.time + '000';
             return [parseInt(time), dataObj.open, dataObj.high, dataObj.low, dataObj.close]
@@ -31,12 +32,11 @@ export default class Chart extends React.Component {
 
     render() {
         const config = {
-            
-            
                     rangeSelector: {
                         selected: 1
                     },
             
+                
                     title: {
                         text: 'Currency Historical'
                     },
@@ -68,7 +68,7 @@ export default class Chart extends React.Component {
                     tooltip: {
                         split: true
                     },
-            
+
                     series: [{
                         type: 'candlestick', color: "red",
                         name: 'BTC',
@@ -98,13 +98,10 @@ export default class Chart extends React.Component {
                         }
                     }]
                 }
-
-
         return (
             <div className="chart">
-          <ReactHighstock config={config} ></ReactHighstock >
+          <ReactHighstock config={config}></ReactHighstock >
           </div>
-
         )
     }
 }
