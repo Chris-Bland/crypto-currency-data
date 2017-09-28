@@ -26,6 +26,7 @@ const styles = theme => ({
     padding: 16,
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    backgroundColor: '#F4F7FA',
   },
 });
 
@@ -49,10 +50,9 @@ class App extends React.Component {
     const { averagePrice, percentChange, price } = this.props.currency;
     const { percentLimit } = this.props
     const movedColor = percentChange > 0 ? 'green' : 'red';
-    console.log('props: ', this.props);
     return (
-      <div className='currency-container'>
-        <Grid container spacing={24}>
+      <div className='currency-container' >
+        <Grid container spacing={8} direction='row'>
           <Grid item xs={12}>
             <Paper>
               <div className={`info-container ${movedColor}`}>
@@ -75,23 +75,19 @@ class App extends React.Component {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={12}>
-            <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData}/> </Paper>
+          <Grid item xs={12} >
+            <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} /> </Paper>
           </Grid>
-
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={3} sm={3}>
             <Paper >
-
               <Table>
-                <TableHead >
+                <TableHead  >
                   <TableRow>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Size</TableCell>
+                    <TableCell colSpan="3" >Asks</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan="3" height="3em" >
-                      Asks
-              </TableCell>
+                    <TableCell>Size</TableCell>
+                    <TableCell>Price</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className="asks" >
@@ -99,8 +95,8 @@ class App extends React.Component {
                     this.props.currency.parsedBook.asks.map(({ price, size, number }, i) => {
                       return (
                         <TableRow key={i}>
-                          <TableCell>{price}</TableCell>
                           <TableCell>{size}</TableCell>
+                          <TableCell>{price}</TableCell>
                         </TableRow>
                       )
 
@@ -108,12 +104,18 @@ class App extends React.Component {
                   }
                 </TableBody>
               </Table>
+            </Paper>
+          </Grid>
+          <Grid item xs={3} sm={3} >
+            <Paper >
               <Table >
                 <TableHead  >
                   <TableRow>
-                    <TableCell colSpan="3" >
-                      Bids
-              </TableCell>
+                    <TableCell colSpan="3" >Bids</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Price</TableCell>
+                    <TableCell>Size</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody className="bids" >
@@ -131,10 +133,8 @@ class App extends React.Component {
               </Table>
             </Paper>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper >
+          <Grid item xs={6}>
               <TwitterTimeline widgetId="912461228252987392" chrome="noborders noheader" />
-            </Paper>
           </Grid>
         </Grid>
       </div >

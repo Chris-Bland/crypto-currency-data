@@ -27,15 +27,15 @@ class App extends React.Component {
     const { value } = this.state;
     return (
       <div>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor: '#136ACD'}}>
       <Toolbar>
-        <Typography type="title" color="inherit">
-          WTF is Bitcoin at NOW?
+        <Typography type="title" style={{backgroundColor:'#136ACD', color:"white"}}>
+          crypto watch
         </Typography>
       </Toolbar>
     </AppBar>
-    <AppBar position="static">
-          <Tabs  value={value}>
+    <AppBar position="static" style={{backgroundColor:'#136ACD'}} >
+          <Tabs  value={value} >
             <Tab label="Dashboard" />
           </Tabs>
         </AppBar>
