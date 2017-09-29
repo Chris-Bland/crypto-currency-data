@@ -28,7 +28,7 @@ class CurrencyTabs extends React.Component {
   render() {
     const { value } = this.state;
     return (
-      <Paper >
+      <Paper style={{backgroundColor: '#EAEBEC'}}>
         <Tabs
           value={value}
           onChange={this.handleChange}

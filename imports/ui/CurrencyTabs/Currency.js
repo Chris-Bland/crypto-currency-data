@@ -12,6 +12,8 @@ import Table, {
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import Icon from 'material-ui/Icon';
+
 import numeral from 'numeral';
 import Loading from '../Loading';
 
@@ -47,14 +49,16 @@ class App extends React.Component {
               <div className={`info-container ${movedColor}`}>
                   <div className='btcTitle currencyBarBlack'>{this.props.currencyType}  </div>
                   <div className='price currencyBarBlack'>{numeral(price).format('$0,0.00')}  </div>
-                  <div className={`currencyMoved ${movedColor}`}>{numeral(currencyMoved).format('0,0.00')}  </div>
+                  <div className={`currencyMoved ${movedColor}`}>{numeral(Math.abs(currencyMoved)).format('0,0.00')}  </div>
                   <img className="arrow" src={`${arrowColor}`} alt="arrow" />
-                  <div className={`percentChange ${movedColor}`}>{numeral(percentChange).format('0.00%')}  </div>
+                  <div className={`percentChange ${movedColor}`}>{numeral(Math.abs(percentChange)).format('0.00%')}  </div>
                 </div>
           </Grid>
+          
           <Grid item xs={12} >
             <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} /> </Paper>
           </Grid>
+
           <Grid item xs={3} sm={3}>
             <Paper >
               <Table>
@@ -119,6 +123,7 @@ class App extends React.Component {
     )
   }
 }
+
 
 const getCoinData = gql`
   query($currencyType: String!) {

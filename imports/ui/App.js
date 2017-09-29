@@ -4,6 +4,8 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Tabs, { Tab } from 'material-ui/Tabs';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 
 import CurrencyTabs from './CurrencyTabs/Index'
 
@@ -20,26 +22,28 @@ class App extends React.Component {
     super(props);
     this.state = {
       value: 0,
+      
     }
   }
 
   render() {
     const { value } = this.state;
     return (
-      <div>
-      <AppBar position="static" style={{backgroundColor: '#136ACD'}}>
-      <Toolbar>
-        <Typography type="title" style={{backgroundColor:'#136ACD', color:"white"}}>
-          crypto watch
+      <div className='desktop' style={{backgroundColor: '#424242'}}>
+        <AppBar position="static" style={{ backgroundColor: '#136ACD' }}>
+          <Toolbar>
+            <Typography type="title" style={{ backgroundColor: '#136ACD', color: "white" }}>
+              crypto watch
         </Typography>
-      </Toolbar>
-    </AppBar>
-    <AppBar position="static" style={{backgroundColor:'#136ACD'}} >
-          <Tabs  value={value} >
+        <Button color="contrast" style={{float:'right'}}>Login</Button>
+          </Toolbar>
+        </AppBar>
+        <AppBar position="static" style={{ backgroundColor: '#136ACD' }} >
+          <Tabs value={value} >
             <Tab label="Dashboard" />
           </Tabs>
         </AppBar>
-        <TabContainer>{ <CurrencyTabs  />}</TabContainer>
+        <TabContainer style={{ backgroundColor: '#EAEBEC' }}>{<CurrencyTabs />}</TabContainer>
 
       </div>
     )
