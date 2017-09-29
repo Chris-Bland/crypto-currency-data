@@ -56,11 +56,11 @@ const Currency = {
         currencyClient.getProductOrderBook({ level: 3 }, (error, response, book) => {
 
           const bids = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 11; i++) {
             bids.push(book.bids[i]);
           }
           const asks = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 11; i++) {
             asks.push(book.asks[i]);
           }
           var asksO = [];

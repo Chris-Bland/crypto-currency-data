@@ -40,83 +40,76 @@ class App extends React.Component {
     const { averagePrice, percentChange, price, openPrice } = this.props.currency;
     const { percentLimit } = this.props;
     const movedColor = percentChange > 0 ? 'green' : 'red';
-    const arrowColor = percentChange> 0 ? './green.png' : './red.png';
+    const arrowColor = percentChange > 0 ? './green.png' : './red.png';
     const currencyMoved = price - openPrice;
-    return (   
-      <div className='currency-container' >       
+    return (
+      <div className='currency-container' >
         <Grid container spacing={8} direction='row'>
           <Grid item xs={12}>
-              <div className={`info-container ${movedColor}`}>
-                  <div className='btcTitle currencyBarBlack'>{this.props.currencyType}  </div>
-                  <div className='price currencyBarBlack'>{numeral(price).format('$0,0.00')}  </div>
-                  <div className={`currencyMoved ${movedColor}`}>{numeral(Math.abs(currencyMoved)).format('0,0.00')}  </div>
-                  <img className="arrow" src={`${arrowColor}`} alt="arrow" />
-                  <div className={`percentChange ${movedColor}`}>{numeral(Math.abs(percentChange)).format('0.00%')}  </div>
-                </div>
+            <div className={`info-container ${movedColor}`}>
+              <div className='btcTitle currencyBarBlack'>{this.props.currencyType}  </div>
+              <div className='price currencyBarBlack'>{numeral(price).format('$0,0.00')}  </div>
+              <div className={`currencyMoved ${movedColor}`}>{numeral(Math.abs(currencyMoved)).format('0,0.00')}  </div>
+              <img className="arrow" src={`${arrowColor}`} alt="arrow" />
+              <div className={`percentChange ${movedColor}`}>{numeral(Math.abs(percentChange)).format('0.00%')}  </div>
+            </div>
           </Grid>
-          
+
           <Grid item xs={12} >
             <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} /> </Paper>
           </Grid>
-
-          <Grid item xs={3} sm={3}>
-            <Paper >
-              <Table>
+            <Grid item xs={3} sm={3}>
+              <Paper style={{backgroundColor: '#424242', padding:'4px', borderRadius: '5px'}}>
+                <Table>
                 <TableHead  >
-                  <TableRow>
-                    <TableCell colSpan="3" >Asks</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Size</TableCell>
-                    <TableCell>Price</TableCell>
+                  <TableRow style={{ }}>
+                    <TableCell className='ask'  >Size</TableCell>
+                    <TableCell className='ask'>Asks</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody className="asks" >
-                  {
-                    this.props.currency.parsedBook.asks.map(({ price, size, number }, i) => {
-                      return (
-                        <TableRow key={i}>
-                          <TableCell>{size}</TableCell>
-                          <TableCell>{price}</TableCell>
-                        </TableRow>
-                      )
-
-                    })
-                  }
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
-          <Grid item xs={3} sm={3} >
-            <Paper >
-              <Table >
-                <TableHead  >
-                  <TableRow>
-                    <TableCell colSpan="3" >Bids</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Size</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody className="bids" >
-                  {
-                    this.props.currency.parsedBook.bids.map(({ price, size, number }, i) => {
-                      return (
-                        <TableRow key={i}>
-                          <TableCell>{price}</TableCell>
-                          <TableCell>{size}</TableCell>
-                        </TableRow>
-                      )
-                    })
-                  }
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
+                  <TableBody className="asks" >
+                    {
+                      this.props.currency.parsedBook.asks.map(({ price, size, number }, i) => {
+                        return (
+                          <TableRow key={i} style={{  }}>
+                            <TableCell className='ask' >{size}</TableCell>
+                            <TableCell className='ask'>{price}</TableCell>
+                          </TableRow>
+                        )
+                      })
+                    }
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
+            <Grid item xs={3} sm={3} >
+              <Paper style={{backgroundColor: '#424242', padding:'4px', borderRadius: '5px'}} >
+                <Table >
+                  <TableHead  >
+                    <TableRow style={{ }}>
+                      <TableCell className='bid'>Bids</TableCell>
+                      <TableCell className='bid'>Size</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody className="bids" >
+                    {
+                      this.props.currency.parsedBook.bids.map(({ price, size, number }, i) => {
+                        return (
+                          <TableRow key={i}>
+                            <TableCell className='bid'>{price}</TableCell>
+                            <TableCell className='bid'>{size}</TableCell>
+                          </TableRow>
+                        )
+                      })
+                    }
+                  </TableBody>
+                </Table>
+              </Paper>
+            </Grid>
           <Grid item xs={6}>
-              <TwitterTimeline widgetId="912461228252987392" chrome="noborders noheader" />
+            <TwitterTimeline widgetId="912461228252987392" chrome="noborders noheader" />
           </Grid>
+
         </Grid>
       </div >
 

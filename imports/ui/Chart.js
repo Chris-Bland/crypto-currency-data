@@ -3,14 +3,31 @@ import React from 'react';
 var ReactHighstock = require('react-highcharts/ReactHighstock.src');
 var Highlight = require('react-highlight');
 var ReactDOM = require('react-dom');
+import Radio, { RadioGroup } from 'material-ui/Radio';
+import { FormLabel, FormControl, FormControlLabel } from 'material-ui/Form';
+
 import _ from 'lodash';
+
+const styles = theme => ({
+    group: {
+        margin: `${theme.spacing.unit}px 0`,
+    },
+});
+
+
 export default class Chart extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            value: 'candlestick',
+          };
         this.formatPriceData = this.formatPriceData.bind(this);
         this.formatVolumeData = this.formatVolumeData.bind(this);
 
+
     }
+
+   
     formatPriceData() {
         const { chartData } = this.props
         const sortedChartData = _.sortBy(chartData, 'time')
@@ -29,10 +46,17 @@ export default class Chart extends React.Component {
 
         })
     }
+    setChartType = (event, value) => {
+        this.setState({ value });
+    };
 
     render() {
+        const { value } = this.state;
+        console.log('value: ', value);
+        const chartColor = value === 'candlestick' ? 'red' : 'blue';
         const config = {
             rangeSelector: {
+                
                 buttons: [{
                     type: 'hour',
                     count: 1,
@@ -106,8 +130,8 @@ export default class Chart extends React.Component {
             },
 
             series: [{
-                type: 'candlestick',
-                color: "red",
+                type: `${value}`,
+                color: `${chartColor}`,
                 upColor: 'green',
                 name: 'BTC',
                 data: this.formatPriceData(),
@@ -119,7 +143,8 @@ export default class Chart extends React.Component {
                         'hour',
                         [1, 2, 3, 4, 6]
                     ]]
-                }
+                },
+
             }, {
                 type: 'column',
                 name: 'Volume',
@@ -167,7 +192,7 @@ export default class Chart extends React.Component {
                 gridLineColor: '#707073',
                 labels: {
                     style: {
-                        color: '#E0E0E3' //time below volume
+                        color: '#E0E0E3' 
                     }
                 },
                 lineColor: '#707073',
@@ -236,34 +261,24 @@ export default class Chart extends React.Component {
             credits: {
                 style: {
                     color: '#666'
-                }
-            },
+                }},
             labels: {
                 style: {
                     color: '#707073'
-                }
-            },
-
+                }},
             drilldown: {
                 activeAxisLabelStyle: {
                     color: '#F0F0F3'
                 },
                 activeDataLabelStyle: {
                     color: '#F0F0F3'
-                }
-            },
-
+                }},
             navigation: {
                 buttonOptions: {
                     symbolStroke: '#DDDDDD',
                     theme: {
                         fill: '#505053'
-                    }
-                }
-            },
-
-    
-
+                    }}},
             navigator: {
                 handles: {
                     backgroundColor: '#666',
@@ -279,7 +294,6 @@ export default class Chart extends React.Component {
                     gridLineColor: '#505053'
                 }
             },
-
             scrollbar: {
                 barBackgroundColor: '#808083',
                 barBorderColor: '#808083',
@@ -290,8 +304,6 @@ export default class Chart extends React.Component {
                 trackBackgroundColor: '#404043',
                 trackBorderColor: '#404043'
             },
-
-            // special colors for some of the
             legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
             background2: '#505053',
             dataLabelsColor: '#B0B0B3',
@@ -299,16 +311,23 @@ export default class Chart extends React.Component {
             contrastTextColor: '#F0F0F3',
             maskColor: 'rgba(255,255,255,0.3)'
         }
-
-
-
-
-
-
-
         return (
-            <div className="chart">
+            <div className="chart" >
                 <ReactHighstock config={config}></ReactHighstock >
+                <FormControl component="fieldset" required>
+                    <FormLabel component="legend">Chart Style</FormLabel>
+                    <RadioGroup
+                        aria-label="Chart Type"
+                        name="chartType"
+                        value={value}
+                        onChange={this.setChartType}
+                        row={true}
+                      
+                    >
+                        <FormControlLabel style={{fontFamily: 'Arial', fontSize: '15px', fontWeight: '500', color: 'white'}}value="candlestick" control={<Radio />} label="Candlestick" />
+                        <FormControlLabel style={{fontFamily: 'Arial', fontSize: '15px', fontWeight: '500', color: 'white'}}value="line" control={<Radio />} label="Line" />
+                    </RadioGroup>
+                </FormControl>
             </div>
         )
     }
