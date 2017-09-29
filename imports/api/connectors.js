@@ -45,7 +45,8 @@ const Currency = {
           resolve({
             averagePrice,
             percentChange: (ticker.price - openPrice) / ticker.price,
-            chartData
+            chartData,
+            openPrice
           })
         }
       });
@@ -87,13 +88,14 @@ const Currency = {
           resolve(parsedBook)
         })
       });
-    const { averagePrice, percentChange, chartData} = historicRates;
+    const { averagePrice, percentChange, chartData, openPrice} = historicRates;
     return {
       price: ticker.price,
       averagePrice,
       percentChange,
       parsedBook,
-      chartData
+      chartData,
+      openPrice
     }
   }
 }

@@ -13,22 +13,10 @@ import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import numeral from 'numeral';
-
 import Loading from '../Loading';
 
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 30,
-  },
-  paper: {
-    padding: 16,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-    backgroundColor: '#F4F7FA',
-  },
-});
+
 
 class App extends React.Component {
   constructor(props) {
@@ -47,33 +35,22 @@ class App extends React.Component {
 
   render() {
     if (this.props.loading) return (<Loading />)
-    const { averagePrice, percentChange, price } = this.props.currency;
-    const { percentLimit } = this.props
+    const { averagePrice, percentChange, price, openPrice } = this.props.currency;
+    const { percentLimit } = this.props;
     const movedColor = percentChange > 0 ? 'green' : 'red';
-    return (
-      <div className='currency-container' >
+    const arrowColor = percentChange> 0 ? './green.png' : './red.png';
+    const currencyMoved = price - openPrice;
+    return (   
+      <div className='currency-container' >       
         <Grid container spacing={8} direction='row'>
           <Grid item xs={12}>
-            <Paper>
               <div className={`info-container ${movedColor}`}>
-                <div className='info-item'>
-                  <div className='btcTitle'>Price</div>
-                  <div>{numeral(price).format('$0,0.00')}</div>
+                  <div className='btcTitle currencyBarBlack'>{this.props.currencyType}  </div>
+                  <div className='price currencyBarBlack'>{numeral(price).format('$0,0.00')}  </div>
+                  <div className={`currencyMoved ${movedColor}`}>{numeral(currencyMoved).format('0,0.00')}  </div>
+                  <img className="arrow" src={`${arrowColor}`} alt="arrow" />
+                  <div className={`percentChange ${movedColor}`}>{numeral(percentChange).format('0.00%')}  </div>
                 </div>
-                <div className='info-item'>
-                  <div className='btcTitle' >Avg Price (1 Hr)</div>
-                  <div>{numeral(averagePrice).format('$0,0.00')}</div>
-                </div>
-                <div className='info-item'>
-                  <div className='btcTitle' >Limit Set</div>
-                  <div>{`60 mins`}</div>
-                </div>
-                <div className='info-item'>
-                  <div className='btcTitle'>Percent Moved</div>
-                  <div>{numeral(percentChange).format('0.00%')}</div>
-                </div>
-              </div>
-            </Paper>
           </Grid>
           <Grid item xs={12} >
             <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} /> </Paper>
@@ -149,6 +126,7 @@ const getCoinData = gql`
       price
       averagePrice
       percentChange
+      openPrice
       parsedBook {
         bids {
           price

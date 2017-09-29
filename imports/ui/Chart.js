@@ -33,7 +33,44 @@ export default class Chart extends React.Component {
     render() {
         const config = {
             rangeSelector: {
+                buttons: [{
+                    type: 'hour',
+                    count: 1,
+                    text: '1h'
+                }, {
+                    type: 'day',
+                    count: 1,
+                    text: '1D'
+                }, {
+                    type: 'all',
+                    count: 1,
+                    text: 'All'
+                }],
                 selected: 1,
+                inputEnabled: false,
+                buttonTheme: {
+                    fill: '#505053',
+                    stroke: '#000000',
+                    style: {
+                        color: '#CCC'
+                    },
+                    states: {
+                        hover: {
+                            fill: '#707073',
+                            stroke: '#000000',
+                            style: {
+                                color: 'white'
+                            }
+                        },
+                        select: {
+                            fill: '#000003',
+                            stroke: '#000000',
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                },
             },
             title: {
                 text: 'Currency Historical'
@@ -225,39 +262,7 @@ export default class Chart extends React.Component {
                 }
             },
 
-            rangeSelector: {
-                buttonTheme: {
-                    fill: '#505053',
-                    stroke: '#000000',
-                    style: {
-                        color: '#CCC'
-                    },
-                    states: {
-                        hover: {
-                            fill: '#707073',
-                            stroke: '#000000',
-                            style: {
-                                color: 'white'
-                            }
-                        },
-                        select: {
-                            fill: '#000003',
-                            stroke: '#000000',
-                            style: {
-                                color: 'white'
-                            }
-                        }
-                    }
-                },
-                inputBoxBorderColor: '#505053',
-                inputStyle: {
-                    backgroundColor: '#333',
-                    color: 'silver'
-                },
-                labelStyle: {
-                    color: 'silver'
-                }
-            },
+    
 
             navigator: {
                 handles: {

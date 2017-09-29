@@ -47,14 +47,8 @@ html, body {
   display: flex;
   justify-content: center; 
   font-size: 1em;
+  padding:5px;
 
-  &.red {
-    background-color: #F44336;
-  }
-
-  &.green {
-    background-color: #76FF03;
-  }
 }
 .info-item {
 
@@ -142,4 +136,45 @@ td {
 
 #App {
   background-color: #F4F7FA !important;
+}
+.arrow {
+  height: 2em;
+  width: 2em;
+  padding:5px;
+}
+.currencyMoved {
+  font-family: Arial;
+  font-size: 30px;
+  font-weight: 700;
+  padding:5px;
+
+  &.red {
+    color: #EE3524;;
+  }
+
+  &.green {
+   color: #29FD2F;
+  }
+}
+.percentChange{
+  font-size: 30px;
+  font-weight: 700;
+  font-family: Arial;
+  padding:5px;
+
+  &.red {
+    color: #EE3524;;
+  }
+
+  &.green {
+    color: #29FD2F;
+  }
+}
+
+.currencyBarBlack {
+  font-family: Arial;
+  font-size: 30px;
+  font-weight: 700;
+  color: #424242;
+  padding:5px;
 }

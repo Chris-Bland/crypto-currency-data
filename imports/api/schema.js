@@ -7,6 +7,7 @@ export const typeDefs = [`
     percentChange: Float
     parsedBook: Book
     chartData: [Candles] 
+    openPrice: Float
 
   }
 
@@ -49,6 +50,7 @@ export const resolvers = {
     percentChange: ({ percentChange }) => percentChange,
     parsedBook: ({parsedBook}) => parsedBook,
     chartData: ({chartData}) => chartData,
+    openPrice: ({openPrice}) => openPrice,
   },
   Book: {
     bids: ({bids}) => bids,
