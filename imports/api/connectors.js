@@ -3,9 +3,24 @@ import gdax from 'gdax'
 const Currency = {
   async getData({currencyType}) {
     const currencyClient = new gdax.PublicClient(currencyType);
-    const ticker = await new Promise(function (resolve, reject) {
-      currencyClient.getProductTicker(function (err, res, data) {
-        resolve(data)
+
+    // const ticker = await new Promise(function (resolve, reject) {
+    //   currencyClient.getProductTicker(function (err, res, data) {
+    //     resolve(data)
+    //   })
+    // })
+
+    const oneDayData= await new Promise(function (resolve, reject) {
+      currencyClient.getProduct24HrStats(function (err, res, data) {
+        console.log('24 Hour: ', data);
+          const openPrice = data.open;
+          const lastTrade = data.last;
+          const percentChange = (lastTrade - openPrice) / lastTrade;
+          resolve({
+            openPrice,
+             percentChange,
+             lastTrade
+          })
       })
     })
     
@@ -15,6 +30,7 @@ const Currency = {
       }, (err, response) => {
         if (err) console.log('err', err);
         var currencyHistoric = JSON.parse(response.body);
+        console.log('Currency Length: ', currencyHistoric.length);
 
         if (currencyHistoric[0] === undefined) {
           console.log('API Limit Reached.');
@@ -22,7 +38,7 @@ const Currency = {
         } else {
           let chartData = [];
           let total= 0;
-          for (var i = 0; i < (60); i++) {
+          for (var i = 0; i < (currencyHistoric.length); i++) {
             total += (currencyHistoric[i][1] + currencyHistoric[i][2]) / 2;
             var rv = {};
             for (var j = 0; j < currencyHistoric[i].length; ++j){
@@ -35,18 +51,18 @@ const Currency = {
           }
           chartData.push(rv);
           }
-          let firstCandle = currencyHistoric[(60) - 1];
-          const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
-          const averagePrice = total / 60;
+          // let firstCandle = currencyHistoric[(currencyHistoric.length) - 1];
+          // const openPrice = (firstCandle[1] + firstCandle[2]) / 2;
+          const averagePrice = total / currencyHistoric.length;
 
           // ========================== chartData LOGIC ==========================
   
           // ========================== chartData LOGIC ==========================
           resolve({
             averagePrice,
-            percentChange: (ticker.price - openPrice) / ticker.price,
+            // percentChange: (oneDayData.last - openPrice) / oneDayData.last,
             chartData,
-            openPrice
+            // openPrice
           })
         }
       });
@@ -88,9 +104,10 @@ const Currency = {
           resolve(parsedBook)
         })
       });
-    const { averagePrice, percentChange, chartData, openPrice} = historicRates;
+    const { averagePrice,chartData} = historicRates;
+    const {percentChange, openPrice, lastTrade} = oneDayData;
     return {
-      price: ticker.price,
+      price: lastTrade,
       averagePrice,
       percentChange,
       parsedBook,

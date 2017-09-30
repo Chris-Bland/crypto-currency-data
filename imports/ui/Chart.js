@@ -52,20 +52,31 @@ export default class Chart extends React.Component {
 
     render() {
         const { value } = this.state;
-        console.log('value: ', value);
-        const chartColor = value === 'candlestick' ? 'red' : 'blue';
+        const { currencyType } = this.props;
+        const chartColor = value === 'candlestick' ? 'red' : '#34DFFD';
         const config = {
             rangeSelector: {
-                
                 buttons: [{
+                    type: 'minute',
+                    count: 30,
+                    text: '30m'
+                },{
                     type: 'hour',
                     count: 1,
                     text: '1h'
-                }, {
-                    type: 'day',
-                    count: 1,
-                    text: '1D'
-                }, {
+                },{
+                    type: 'hour',
+                    count: 2,
+                    text: '2hr'
+                },{
+                    type: 'hour',
+                    count: 4,
+                    text: '4hr'
+                },{
+                    type: 'hour',
+                    count: 6,
+                    text: '6hr',
+                },{
                     type: 'all',
                     count: 1,
                     text: 'All'
@@ -106,7 +117,7 @@ export default class Chart extends React.Component {
                     x: -3
                 },
                 title: {
-                    text: 'GDAX'
+                    text: currencyType
                 },
                 height: '60%',
                 lineWidth: 2
@@ -133,7 +144,7 @@ export default class Chart extends React.Component {
                 type: `${value}`,
                 color: `${chartColor}`,
                 upColor: 'green',
-                name: 'BTC',
+                name: currencyType,
                 data: this.formatPriceData(),
                 dataGrouping: {
                     units: [[
@@ -160,6 +171,7 @@ export default class Chart extends React.Component {
                     ]]
                 }
             }],
+            
             colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
                 '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
             chart: {
@@ -324,8 +336,8 @@ export default class Chart extends React.Component {
                         row={true}
                       
                     >
-                        <FormControlLabel style={{fontFamily: 'Arial', fontSize: '15px', fontWeight: '500', color: 'white'}}value="candlestick" control={<Radio />} label="Candlestick" />
-                        <FormControlLabel style={{fontFamily: 'Arial', fontSize: '15px', fontWeight: '500', color: 'white'}}value="line" control={<Radio />} label="Line" />
+                        <FormControlLabel value="candlestick" control={<Radio />} label="Candlestick" />
+                        <FormControlLabel value="line" control={<Radio />} label="Line" />
                     </RadioGroup>
                 </FormControl>
             </div>

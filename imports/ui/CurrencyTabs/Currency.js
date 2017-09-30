@@ -38,7 +38,6 @@ class App extends React.Component {
   render() {
     if (this.props.loading) return (<Loading />)
     const { averagePrice, percentChange, price, openPrice } = this.props.currency;
-    const { percentLimit } = this.props;
     const movedColor = percentChange > 0 ? 'green' : 'red';
     const arrowColor = percentChange > 0 ? './green.png' : './red.png';
     const currencyMoved = price - openPrice;
@@ -56,13 +55,13 @@ class App extends React.Component {
           </Grid>
 
           <Grid item xs={12} >
-            <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} /> </Paper>
+            <Paper > <Chart className="chartComponent" chartData={this.props.currency.chartData} currencyType={this.props.currencyType}/> </Paper>
           </Grid>
             <Grid item xs={3} sm={3}>
               <Paper style={{backgroundColor: '#424242', padding:'4px', borderRadius: '5px'}}>
                 <Table>
                 <TableHead  >
-                  <TableRow style={{ }}>
+                  <TableRow >
                     <TableCell className='ask'  >Size</TableCell>
                     <TableCell className='ask'>Asks</TableCell>
                   </TableRow>
@@ -71,7 +70,7 @@ class App extends React.Component {
                     {
                       this.props.currency.parsedBook.asks.map(({ price, size, number }, i) => {
                         return (
-                          <TableRow key={i} style={{  }}>
+                          <TableRow key={i} >
                             <TableCell className='ask' >{size}</TableCell>
                             <TableCell className='ask'>{price}</TableCell>
                           </TableRow>

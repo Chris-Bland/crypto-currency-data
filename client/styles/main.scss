@@ -104,13 +104,13 @@ input{
 }
 .bids {
  
-  background-color: rgba(104, 226, 104, 0.6)!important;
+  background-color: #34ACAF!important;
   font-size: .78em;
   font-weight: bold;
 }
 .asks {
   
-  background-color: rgba(239, 12, 12, 0.76) !important;
+  background-color: #4094BD !important;
   font-size: .78em;
   font-weight: bold;
 }
@@ -155,9 +155,10 @@ td {
   background-color: #F4F7FA !important;
 }
 .arrow {
-  height: 2em;
-  width: 2em;
+  height: 1.75em;
+  width: 1.75em;
   padding:5px;
+  padding-top: 7px;
 }
 .currencyMoved {
   font-family: Arial;
